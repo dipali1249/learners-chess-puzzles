@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Learners Chess — Puzzles</title>
+<meta name="description" content="20 chess puzzles in four levels — play the winning line on the board.">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="app">
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">&#9822;</div>
+      <div>
+        <h1>Learners Chess <span>Puzzles</span></h1>
+        <p class="sub">20 puzzles in four levels. Play the winning line on the board.</p>
+      </div>
+    </div>
+    <div class="overall">
+      <span id="overall-count">0 / 20 solved</span>
+      <div class="meter"><div class="meter-fill" id="overall-bar"></div></div>
+    </div>
+  </header>
+
+  <nav class="levels" id="levels" aria-label="Puzzle levels"></nav>
+
+  <main>
+    <section class="board-col">
+      <div class="board-frame">
+        <div id="board" class="board"></div>
+      </div>
+    </section>
+
+    <aside class="panel">
+      <div class="puzzle-head">
+        <div>
+          <div class="puzzle-level" id="puzzle-level">Level 1</div>
+          <div class="puzzle-theme" id="puzzle-theme">&mdash;</div>
+        </div>
+        <div class="puzzle-index" id="puzzle-index">1 / 5</div>
+      </div>
+
+      <p class="puzzle-note" id="puzzle-note"></p>
+      <p class="puzzle-source" id="puzzle-source"></p>
+
+      <div class="status" id="status">White to move</div>
+
+      <div class="actions">
+        <button class="btn" id="btn-hint">Hint</button>
+        <button class="btn" id="btn-reset">Reset</button>
+        <button class="btn primary" id="btn-next">Next puzzle</button>
+      </div>
+
+      <div class="progress">
+        <div class="progress-row"><span>Level progress</span><span id="level-progress-text">0 of 5 solved</span></div>
+        <div class="meter"><div class="meter-fill" id="level-bar"></div></div>
+      </div>
+    </aside>
+  </main>
+
+  <footer>
+    Sources: Chess.com daily puzzles, Lichess puzzles (CC0), and two classics from
+    Martin Gardner's chess chapter.
+  </footer>
+</div>
+
+<!-- promotion modal -->
+<div id="promo-modal" class="modal hidden">
+  <div class="modal-card">
+    <h3>Promote to</h3>
+    <div class="promo-row" id="promo-row"></div>
+    <div class="modal-actions">
+      <button id="btn-promo-cancel" class="btn">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/engine.js"></script>
+<script src="js/puzzles.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
