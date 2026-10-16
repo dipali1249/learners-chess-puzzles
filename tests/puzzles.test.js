@@ -1,9 +1,9 @@
 /* Puzzle set tests: run with `node tests/puzzles.test.js`
-   20 puzzles in four levels (five each). Every one is a real position with a
-   solution line — from Chess.com's daily puzzle feed, from Lichess's openly
-   licensed puzzle set, and two classics from the connected knowledge base
-   (Martin Gardner's chess chapter). This re-checks the structure and plays
-   every line. */
+   Every puzzle is a real position with a solution line — from Chess.com's daily
+   puzzle feed, from Lichess's openly licensed puzzle set, two classics from the
+   connected knowledge base (Martin Gardner's chess chapter), and mate puzzles
+   generated and verified with the game's own engine. This re-checks the
+   structure and plays every line. */
 'use strict';
 
 const assert = require('assert');
@@ -27,7 +27,7 @@ function replay(fen, line) {
   return g;
 }
 
-// ---- structure: 20 puzzles, four levels of five, every one sourced ----
+// ---- structure: four levels, every puzzle sourced, no duplicate ids ----
 assert.ok(Array.isArray(PUZZLES), 'the puzzle set is a flat array');
 assert.ok(PUZZLES.length > 0, 'the puzzle set is not empty');
 const ids = new Set();
@@ -48,15 +48,16 @@ for (const p of PUZZLES) {
     assert.ok(p.player === 'w' || p.player === 'b', p.id + ' names the solver colour');
   }
 }
-// four levels, five puzzles each, and every puzzle sits in one of them
+// every puzzle sits in one of the four levels, and each level is populated
 const perLevel = {};
 for (const p of PUZZLES) {
   assert.ok(Number.isInteger(p.level) && p.level >= 1 && p.level <= 4, p.id + ' has a level 1-4');
   perLevel[p.level] = (perLevel[p.level] || 0) + 1;
 }
-assert.strictEqual(PUZZLES.length, 20, 'the set is 20 puzzles');
-for (let n = 1; n <= 4; n++) assert.strictEqual(perLevel[n], 5, 'level ' + n + ' has five puzzles');
-console.log('structure OK: ' + PUZZLES.length + ' puzzles in 4 levels (5 each), no multiple choice');
+assert.ok(PUZZLES.length >= 20, 'the set has at least 20 puzzles');
+for (let n = 1; n <= 4; n++) assert.ok(perLevel[n] >= 1, 'level ' + n + ' has at least one puzzle');
+console.log('structure OK: ' + PUZZLES.length + ' puzzles in 4 levels (' +
+  [1, 2, 3, 4].map((n) => perLevel[n]).join(' / ') + ')');
 
 // ---- every position is legal, and every line plays out ----
 let checked = 0;
@@ -87,7 +88,7 @@ for (const p of PUZZLES) {
       assert.strictEqual(end.moves().length, 0, p.id + ' line must end in mate');
       assert.ok(end.inCheck(), p.id + ' line must end in check');
     }
-    // the trainer hands the solver the moves on their own colour's turns
+    // the solver gets the moves on their own colour's turns
     const initial = new Chess.Game(p.fen).state.turn;
     const playerCol = p.player === 'b' ? -1 : 1;
     let solverMoves = 0;

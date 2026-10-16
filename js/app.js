@@ -40,6 +40,8 @@
 
   function init() {
     loadProgress();
+    var sub = $('sub');
+    if (sub) sub.textContent = PUZZLES.length + ' puzzles in four levels. Play the winning line on the board.';
     buildLevelTabs();
     bindEvents();
     var first = firstUnsolved(1);
