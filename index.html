@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Learners Chess — Puzzles</title>
-<meta name="description" content="Chess puzzles in four levels — play the winning line on the board.">
-<link rel="stylesheet" href="css/style.css">
+<title>Learners Chess — Training</title>
+<meta name="description" content="Chess training: puzzles, topic sets, guess-the-move and blindfold. Points and streaks kept in your browser.">
+<link rel="stylesheet" href="css/style.css?v=2">
 </head>
 <body>
 <div class="app">
@@ -14,23 +14,45 @@
     <div class="brand">
       <div class="brand-mark" aria-hidden="true">&#9822;</div>
       <div>
-        <h1>Learners Chess <span>Puzzles</span></h1>
-        <p class="sub" id="sub">Puzzles in four levels. Play the winning line on the board.</p>
+        <h1>Learners Chess <span>Training</span></h1>
+        <p class="sub" id="sub">Puzzles, topic sets and guess-the-move. Points and streaks stay in this browser.</p>
       </div>
     </div>
     <div class="overall">
-      <span id="overall-count">0 / 20 solved</span>
+      <span id="overall-count">0 / 0 solved</span>
       <div class="meter"><div class="meter-fill" id="overall-bar"></div></div>
     </div>
   </header>
 
+  <section class="today" id="today">
+    <div class="today-main">
+      <div class="today-label">Assignment</div>
+      <div class="today-title" id="today-title">&mdash;</div>
+      <div class="today-note" id="today-note"></div>
+    </div>
+    <div class="today-stats">
+      <div class="today-stat"><b id="today-points">0</b><span>points</span></div>
+      <div class="today-stat"><b id="today-streak">0</b><span>streak</span></div>
+    </div>
+    <button class="btn primary" id="btn-today">Start</button>
+  </section>
+
+  <nav class="modes" id="modes" aria-label="Training mode">
+    <button data-mode="practice" class="mode-tab active">Puzzles</button>
+    <button data-mode="topics" class="mode-tab">Topics</button>
+    <button data-mode="guess" class="mode-tab">Guess the move</button>
+  </nav>
+
   <nav class="levels" id="levels" aria-label="Puzzle levels"></nav>
+  <nav class="levels hidden" id="topics" aria-label="Topics"></nav>
+  <nav class="levels hidden" id="games" aria-label="Games"></nav>
 
   <main>
     <section class="board-col">
       <div class="board-frame">
         <div id="board" class="board"></div>
       </div>
+      <p class="blind-note hidden" id="blind-note">Blindfold &mdash; play the move from memory.</p>
     </section>
 
     <aside class="panel">
@@ -52,9 +74,12 @@
         <button class="btn" id="btn-reset">Reset</button>
         <button class="btn primary" id="btn-next">Next puzzle</button>
       </div>
+      <div class="actions">
+        <button class="btn" id="btn-blind">Blindfold: off</button>
+      </div>
 
       <div class="progress">
-        <div class="progress-row"><span>Level progress</span><span id="level-progress-text">0 of 5 solved</span></div>
+        <div class="progress-row"><span id="progress-label">Level progress</span><span id="level-progress-text">0 of 5 solved</span></div>
         <div class="meter"><div class="meter-fill" id="level-bar"></div></div>
       </div>
     </aside>
@@ -63,6 +88,7 @@
   <footer>
     Sources: Chess.com daily puzzles, Lichess puzzles (CC0), two classics from
     Martin Gardner's chess chapter, and mate puzzles generated with the game's engine.
+    Guess-the-move games open with a book line and continue as engine self-play.
   </footer>
 </div>
 
@@ -79,6 +105,7 @@
 
 <script src="js/engine.js"></script>
 <script src="js/puzzles.js"></script>
+<script src="js/games.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>

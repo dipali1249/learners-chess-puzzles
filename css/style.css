@@ -136,8 +136,12 @@ main { display: flex; gap: 22px; align-items: flex-start; }
   pointer-events: none; user-select: none;
   filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.35));
 }
-.piece.white { color: #fbfbf7; text-shadow: 0 0 2px #000, 0 0 4px rgba(0, 0, 0, 0.6); }
-.piece.black { color: #26242b; text-shadow: 0 0 2px rgba(255, 255, 255, 0.5), 0 0 3px rgba(0, 0, 0, 0.25); }
+/* White reads as an outline, Black as a solid, both in one dark ink - the same
+   classic convention the game uses. */
+.piece.white, .piece.black {
+  color: #1c1712;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25), 0 0 2px rgba(255, 255, 255, 0.45);
+}
 
 .square.last-from { box-shadow: inset 0 0 0 100vmax var(--last-from); }
 .square.last-to   { box-shadow: inset 0 0 0 100vmax var(--last-to); }
@@ -249,8 +253,8 @@ footer {
   font-family: "Segoe UI Symbol", "Noto Sans Symbols 2", "DejaVu Sans", sans-serif;
 }
 .promo-btn:hover { background: var(--surface-3); transform: translateY(-3px); }
-.promo-btn.white-piece { color: #fbfbf7; text-shadow: 0 0 3px #000; }
-.promo-btn.black-piece { color: #26242b; text-shadow: 0 0 2px rgba(255, 255, 255, 0.5); }
+.promo-btn.white-piece, .promo-btn.black-piece { color: #1c1712; }
+
 
 .shake { animation: shake 0.3s; }
 @keyframes shake {
@@ -267,3 +271,48 @@ footer {
   .overall { min-width: 0; }
   .overall span { text-align: left; }
 }
+
+/* ---------- training additions ---------- */
+.hidden { display: none !important; }
+
+/* the Monday/Thursday assignment card */
+.today {
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  padding: 14px 16px; margin-bottom: 18px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);
+}
+.today-main { flex: 1 1 240px; min-width: 0; }
+.today-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.11em; text-transform: uppercase; color: var(--text-faint); }
+.today-title { font-weight: 800; font-size: 1rem; margin-top: 3px; }
+.today-note { font-size: 0.8rem; color: var(--text-dim); margin-top: 2px; }
+.today-stats { display: flex; gap: 18px; }
+.today-stat { display: flex; flex-direction: column; align-items: center; }
+.today-stat b { font-size: 1.15rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+.today-stat span { font-size: 0.66rem; letter-spacing: 0.09em; text-transform: uppercase; color: var(--text-faint); font-weight: 700; }
+.today .btn { flex: none; }
+
+/* mode switch */
+.modes { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+.mode-tab {
+  padding: 8px 14px; border-radius: 999px;
+  border: 1px solid var(--border-strong); background: var(--surface);
+  color: var(--text-dim); font-family: inherit; font-weight: 700; font-size: 0.85rem;
+  cursor: pointer; transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.mode-tab:hover { background: var(--surface-3); color: var(--text); }
+.mode-tab.active { background: var(--accent); border-color: transparent; color: #fff; box-shadow: 0 4px 12px rgba(47, 77, 143, 0.28); }
+
+/* blindfold */
+.board.hidden-pieces .piece { visibility: hidden; }
+.blind-note {
+  margin: 10px 0 0; text-align: center;
+  font-size: 0.8rem; font-weight: 700; color: var(--warn);
+  letter-spacing: 0.06em; text-transform: uppercase;
+}
+.actions + .actions { margin-top: 8px; }
+.actions #btn-blind { grid-column: 1 / -1; }
+
+/* the guess mode has no Hint, so Restart takes the full row */
+.actions.guess #btn-reset { grid-column: 1 / -1; }
